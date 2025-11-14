@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>الساونا | كلبش</title>
+  <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="brand">
+      <img src="assets/images/gallery/logo.png" alt="كلبش" class="logo">
+      <span class="brand-name">كلبش</span>
+    </a>
+    <button class="nav-toggle" aria-label="فتح القائمة"></button>
+    <form class="nav-search" role="search" aria-label="بحث الموقع">
+      <input type="search" id="siteSearch" name="q" placeholder="ابحث عن منتج أو جهاز..." autocomplete="off" aria-label="اكتب نص البحث">
+      <button type="submit" class="btn search-btn" aria-label="تنفيذ البحث">بحث</button>
+    </form>
+    <nav class="site-nav">
+      <a href="index.html">الرئيسية</a>
+      <a href="pricing.html">عروض الأسعار</a>
+      <a href="gallery.html">المعرض</a>
+      <a href="shop.html">المتجر</a>
+      <a class="active" href="sauna.html">الساونا</a>
+      <a href="contact.html">اتصل بنا</a>
+      <a href="#dev" class="admin-link">المطوّر</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <h2>الساونا</h2>
+      <p>استرخاء وتجديد للطاقة</p>
+    </section>
+
+    <section class="sauna-intro container">
+      <div class="sauna-content">
+        <h3>تجربة ساونا فريدة</h3>
+        <p>استمتع بتجربة ساونا مميزة في صالون كلبش، حيث نقدم لك أفضل خدمات الاسترخاء والعناية بالبشرة. تساعد الساونا على تنشيط الدورة الدموية وتنقية البشرة وتخفيف التوتر.</p>
+        
+        <div class="sauna-features">
+          <div class="feature">
+            <i class="fa-solid fa-temperature-high"></i>
+            <h4>حرارة مثالية</h4>
+            <p>درجة حرارة مضبوطة للحصول على أفضل تجربة</p>
+          </div>
+          <div class="feature">
+            <i class="fa-solid fa-droplet"></i>
+            <h4>رطوبة متوازنة</h4>
+            <p>مستويات رطوبة مناسبة لتنقية البشرة</p>
+          </div>
+          <div class="feature">
+            <i class="fa-solid fa-clock"></i>
+            <h4>جلسات مرنة</h4>
+            <p>اختر المدة المناسبة لجلستك</p>
+          </div>
+        </div>
+      </div>
+      <div class="sauna-image">
+        <img src="assets/images/gallery/sauna.svg" alt="ساونا كلبش">
+      </div>
+    </section>
+
+    <section class="sauna-packages container">
+      <h3>باقات الساونا</h3>
+      <div class="packages-grid">
+        <div class="package-card" data-package="الجلسة الفردية" data-price="100 ج">
+          <h4>الجلسة الفردية</h4>
+          <p class="price">100 ج</p>
+          <ul>
+            <li><i class="fa-solid fa-check"></i> جلسة ساونا لمدة 30 دقيقة</li>
+            <li><i class="fa-solid fa-check"></i> مشروب منعش</li>
+            <li><i class="fa-solid fa-check"></i> منشفة نظيفة</li>
+          </ul>
+          <a href="#" class="btn primary book-btn" data-package="الجلسة الفردية" data-price="100 ج">احجز الآن</a>
+        </div>
+        <div class="package-card recommended" data-package="الباقة المميزة" data-price="250 ج">
+          <h4>الباقة المميزة</h4>
+          <p class="price">250 ج</p>
+          <ul>
+            <li><i class="fa-solid fa-check"></i> جلسة ساونا لمدة 45 دقيقة</li>
+            <li><i class="fa-solid fa-check"></i> تدليك الوجه</li>
+            <li><i class="fa-solid fa-check"></i> قناع تنظيف عميق</li>
+            <li><i class="fa-solid fa-check"></i> مشروب منعش</li>
+          </ul>
+          <a href="#" class="btn primary book-btn" data-package="الباقة المميزة" data-price="250 ج">احجز الآن</a>
+        </div>
+        <div class="package-card" data-package="باقة الأصدقاء" data-price="400 ج">
+          <h4>باقة الأصدقاء</h4>
+          <p class="price">400 ج</p>
+          <ul>
+            <li><i class="fa-solid fa-check"></i> جلسة ساونا لشخصين (60 دقيقة)</li>
+            <li><i class="fa-solid fa-check"></i> مشروبات منعشة</li>
+            <li><i class="fa-solid fa-check"></i> قناع تنظيف للوجه</li>
+            <li><i class="fa-solid fa-check"></i> خصم 10% على الخدمات الإضافية</li>
+          </ul>
+          <a href="#" class="btn primary book-btn" data-package="باقة الأصدقاء" data-price="400 ج">احجز الآن</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="sauna-benefits container">
+      <h3>فوائد الساونا</h3>
+      <div class="benefits-grid">
+        <div class="benefit">
+          <i class="fa-solid fa-heart"></i>
+          <h4>تحسين الدورة الدموية</h4>
+          <p>تساعد الساونا على تنشيط الدورة الدموية وتحسين تدفق الدم في الجسم.</p>
+        </div>
+        <div class="benefit">
+          <i class="fa-solid fa-face-smile"></i>
+          <h4>تنقية البشرة</h4>
+          <p>تساعد على فتح المسام وتنظيف البشرة من السموم والشوائب.</p>
+        </div>
+        <div class="benefit">
+          <i class="fa-solid fa-brain"></i>
+          <h4>تخفيف التوتر</h4>
+          <p>تساهم في الاسترخاء وتخفيف التوتر والضغط النفسي.</p>
+        </div>
+        <div class="benefit">
+          <i class="fa-solid fa-shield-virus"></i>
+          <h4>تعزيز المناعة</h4>
+          <p>تساعد على تعزيز جهاز المناعة ومقاومة الأمراض.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- نافذة إتمام الحجز -->
+  <div class="modal-overlay" id="bookingOverlay" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+      <h3 id="bookingTitle">إتمام الحجز</h3>
+      <p class="package-summary">الباقة: <span id="bookingPackage"></span> — السعر: <span id="bookingPrice"></span></p>
+      <form id="bookingForm">
+        <label for="bkName">الاسم الكامل</label>
+        <input type="text" id="bkName" name="bkName" placeholder="اكتب اسمك" required>
+
+        <label for="bkPhone">رقم الهاتف</label>
+        <input type="tel" id="bkPhone" name="bkPhone" placeholder="01XXXXXXXXX" required>
+
+        <label for="bkDateTime">موعد الحجز</label>
+        <input type="datetime-local" id="bkDateTime" name="bkDateTime" required>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn primary">إرسال عبر واتساب</button>
+          <button type="button" class="btn" id="bkCancel">إلغاء</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h4>العنوان</h4>
+        <p>اكتب عنوان موقعك هنا</p>
+      </div>
+      <div>
+        <h4>التواصل</h4>
+        <p>واتساب: <a href="https://wa.me/201023080996" target="_blank" rel="noopener">201023080996</a></p>
+        <p>إنستجرام: <a href="#" target="_blank" rel="noopener">@kalabsh_barber</a></p>
+      </div>
+      <div>
+        <h4>ساعات العمل</h4>
+        <p>يومياً 10ص - 10م</p>
+      </div>
+    </div>
+    <p class="copyright">© 2025 كلبش</p>
+  </footer>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/error-filter.js"></script>
+  <script src="assets/js/dev.js"></script>
+</body>
+</html>

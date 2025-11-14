@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>صانع المفاتيح (أوفلاين)</title>
+  <link rel="stylesheet" href="license_maker.css">
+</head>
+<body>
+  <h1>صانع المفاتيح (أوفلاين)</h1>
+  <div class="panel">
+    <p>هذه الصفحة تعمل بالكامل داخل المتصفح بدون إنترنت وبدون أي برامج خارجية. لا تحتاج سوى لصق بصمة الجهاز ثم الضغط على "إنشاء المفتاح".</p>
+    <ul>
+      <li>انسخ <strong>بصمة الجهاز</strong> من صفحة <code>admin.php</code> على الجهاز الهدف.</li>
+      <li>اضغط "إنشاء المفتاح"، وسيتم استخدام <strong>مفتاح خاص (PKCS8)</strong> محفوظًا في ملف <code>tools/issuer_private_pkcs8.pem</code>.</li>
+      <li>انسخ "المفتاح الناتج" وأرسله للجهاز الهدف لتفعيله.</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <label for="fp">بصمة الجهاز (Hex)</label>
+    <input type="text" id="fp" placeholder="ألصق البصمة هنا">
+
+    <div class="row">
+      <div class="col">
+        <label for="days">مدة الصلاحية (أيام)</label>
+        <input type="text" id="days" value="30">
+      </div>
+      <div>
+        <button class="btn" id="make">إنشاء المفتاح</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- تمت إزالة الإدخال اليدوي للمفتاح الخاص لتبسيط الاستخدام. سيتم تحميل المفتاح من ملف issuer_private_pkcs8.pem تلقائيًا. -->
+
+  <div class="panel">
+    <h3>إعداد المفتاح العام على الخادم</h3>
+    <p>هذه الصفحة تستخدم المفتاح الخاص من الملف <code>tools/issuer_private_pkcs8.pem</code>. تأكد أن المفتاح العام المطابق له موجود في <code>assets/php/license_issuer_public.pem</code> على الخادم. إن لم يكن لديك المفتاح العام، استخرجه عبر السكربت: <code>php tools/license_maker.php --pubout</code>.</p>
+  </div>
+
+  <div class="panel">
+    <h3>بديل في حال فتح الصفحة كملف محلي</h3>
+    <p>إذا فتحت الصفحة عبر <code>file://</code> فالمتصفح يمنع قراءة ملفات أخرى مباشرة. لديك خياران:
+      <br>- افتح الصفحة عبر الخادم المحلي: <code>http://127.0.0.1:8080/tools/license_maker.html</code>
+      <br>- أو اختر ملف المفتاح الخاص يدويًا هنا:</p>
+    <label for="privFile">اختيار ملف المفتاح الخاص (PKCS8 PEM)</label>
+    <input type="file" id="privFile" accept=".pem" />
+    <small>تأكد أن الملف يحتوي على العنوان <code>-----BEGIN PRIVATE KEY-----</code>.</small>
+  </div>
+
+  <div class="panel">
+    <label>المفتاح الناتج</label>
+    <div id="out" class="out"></div>
+    <div class="row">
+      <button class="btn" id="copy">نسخ المفتاح</button>
+      <button class="btn secondary" id="showPayload">عرض الحمولة (payload)</button>
+    </div>
+    <div id="payload" class="out mt-8 hidden"></div>
+  </div>
+
+  <script>
+    function b64urlEncode(bytes) {
+      const bin = String.fromCharCode(...new Uint8Array(bytes));
+      return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/,'');
+    }
+    function b64ToArrayBuffer(b64) {
+      const bin = atob(b64);
+      const buf = new Uint8Array(bin.length);
+      for (let i=0;i<bin.length;i++) buf[i] = bin.charCodeAt(i);
+      return buf.buffer;
+    }
+    function pemToDer(pem) {
+      // Strip headers/footers and whitespace
+      const clean = pem.replace(/-----BEGIN [^-]+-----/g, '').replace(/-----END [^-]+-----/g, '')
+                       .replace(/\s+/g, '');
+      return b64ToArrayBuffer(clean);
+    }
+    function hexFromBytes(bytes) {
+      return Array.from(new Uint8Array(bytes)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
+    function randomHex(nBytes) {
+      const u = new Uint8Array(nBytes);
+      crypto.getRandomValues(u);
+      return hexFromBytes(u);
+    }
+    function canonicalPayload(fpHex, days) {
+      const now = Math.floor(Date.now()/1000);
+      const exp = now + (Math.max(1, parseInt(days,10)||30) * 24 * 60 * 60);
+      const payload = {
+        device_fingerprint: fpHex,
+        exp: exp,
+        issued_at: now,
+        license_id: randomHex(8)
+      };
+      return JSON.stringify(payload); // compact JSON
+    }
+    async function signPayloadPKCS8(privPem, payloadStr) {
+      const der = pemToDer(privPem);
+      const key = await crypto.subtle.importKey(
+        'pkcs8', der, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['sign']
+      );
+      const sig = await crypto.subtle.sign('RSASSA-PKCS1-v1_5', key, new TextEncoder().encode(payloadStr));
+      return sig;
+    }
+    let privFileText = '';
+    async function loadEmbeddedPrivatePem() {
+      // يفضّل الجلب عبر HTTP/HTTPS، وإلا يستخدم ملف اختاره المستخدم
+      const proto = location.protocol.replace(':','');
+      const isHttp = proto === 'http' || proto === 'https';
+      async function tryFetch(path) {
+        const resp = await fetch(path);
+        if (!resp.ok) throw new Error('fetch_failed');
+        const text = await resp.text();
+        if (text && text.includes('BEGIN PRIVATE KEY')) return text.trim();
+        throw new Error('invalid_content');
+      }
+      if (isHttp) {
+        const candidates = [
+          'issuer_private_pkcs8.pem',
+          './issuer_private_pkcs8.pem',
+          '/tools/issuer_private_pkcs8.pem'
+        ];
+        for (const p of candidates) {
+          try { return await tryFetch(p); } catch (e) { /* continue */ }
+        }
+      }
+      if (privFileText && privFileText.includes('BEGIN PRIVATE KEY')) return privFileText.trim();
+      throw new Error('missing_private');
+    }
+
+    document.getElementById('make').addEventListener('click', async () => {
+      const fp = document.getElementById('fp').value.trim();
+      const days = document.getElementById('days').value.trim();
+      let priv = '';
+      const out = document.getElementById('out');
+      const payloadEl = document.getElementById('payload');
+      payloadEl.classList.add('hidden');
+      payloadEl.textContent = '';
+      out.textContent = '';
+      if (!fp) { out.textContent = 'يرجى لصق بصمة الجهاز.'; return; }
+      if (!/^[0-9a-fA-F]+$/.test(fp)) { out.textContent = 'البصمة يجب أن تكون نصًا ست عشريًا (Hex).'; return; }
+      if (fp.length < 32) { out.textContent = 'البصمة قصيرة جدًا، تأكد من نسخها كاملة من صفحة الإدارة.'; return; }
+      // تحميل المفتاح الخاص تلقائيًا من الملف إن لم يكن مدخلاً يدويًا
+      try {
+        priv = await loadEmbeddedPrivatePem();
+      } catch (e) {
+        const isFile = location.protocol.startsWith('file');
+        out.innerHTML = 'لم يتم العثور على مفتاح خاص PKCS8.'
+          + (isFile ? '<br>يبدو أنك فتحت الصفحة كملف محلي (<code>file://</code>). المتصفح يمنع قراءة ملفات أخرى مباشرة.' : '')
+          + '<br>إما أن تفتح الصفحة عبر الخادم المحلي: <code>http://127.0.0.1:8080/tools/license_maker.html</code>'
+          + ' أو اختر ملف المفتاح الخاص عبر الزر أعلاه ثم أعد المحاولة.'
+          + '<br>إذا كنت تستخدم الخادم المحلي، يمكنك اختبار الملف عبر: '
+          + '<a href="/tools/issuer_private_pkcs8.pem" target="_blank">/tools/issuer_private_pkcs8.pem</a> ثم حدّث الصفحة (Ctrl+F5).';
+        return;
+      }
+      try {
+        const payload = canonicalPayload(fp, days);
+        const sig = await signPayloadPKCS8(priv, payload);
+        const license = b64urlEncode(new TextEncoder().encode(payload)) + '.' + b64urlEncode(sig);
+        out.textContent = license;
+        payloadEl.textContent = payload;
+      } catch (e) {
+        out.textContent = 'فشل التوقيع: تأكد من صحة المفتاح الخاص (PKCS8) الموجود في tools/issuer_private_pkcs8.pem';
+      }
+    });
+    document.getElementById('copy').addEventListener('click', async () => {
+      const out = document.getElementById('out');
+      if (!out.textContent) return;
+      try { await navigator.clipboard.writeText(out.textContent); alert('تم النسخ'); } catch (e) { alert('تعذّر النسخ، انسخ يدويًا'); }
+    });
+    document.getElementById('showPayload').addEventListener('click', () => {
+      const payloadEl = document.getElementById('payload');
+      payloadEl.classList.toggle('hidden');
+    });
+    document.getElementById('privFile').addEventListener('change', async (ev) => {
+      const f = ev.target.files && ev.target.files[0];
+      if (!f) { privFileText = ''; return; }
+      const txt = await f.text();
+      privFileText = txt || '';
+      alert(privFileText.includes('BEGIN PRIVATE KEY') ? 'تم تحميل المفتاح الخاص من الملف.' : 'الملف لا يبدو كـ PKCS8 PRIVATE KEY.');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>المعرض | كلبش</title>
+  <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" class="brand">
+      <img src="assets/images/gallery/logo.png" alt="كلبش" class="logo">
+      <span class="brand-name">كلبش</span>
+    </a>
+    <button class="nav-toggle" aria-label="فتح القائمة"></button>
+    <form class="nav-search" role="search" aria-label="بحث الموقع">
+      <input type="search" id="siteSearch" name="q" placeholder="ابحث عن منتج أو جهاز..." autocomplete="off" aria-label="اكتب نص البحث">
+      <button type="submit" class="btn search-btn" aria-label="تنفيذ البحث">بحث</button>
+    </form>
+    <nav class="site-nav">
+      <a href="index.html">الرئيسية</a>
+      <a href="pricing.html">عروض الأسعار</a>
+      <a class="active" href="gallery.html">المعرض</a>
+      <a href="shop.html">المتجر</a>
+      <a href="sauna.html">الساونا</a>
+      <a href="contact.html">اتصل بنا</a>
+      <a href="#dev" class="admin-link">المطوّر</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <h2 data-editable="page_header.title">المعرض</h2>
+      <p data-editable="page_header.description">نماذج من أعمالنا</p>
+    </section>
+
+    <section class="gallery-grid" data-editable-repeater="gallery_images">
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="قص كلاسيكي"></div>
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="حلاقة حديثة"></div>
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="تحديد لحية"></div>
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="قص تدرج"></div>
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="ستايل شبابي"></div>
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="قص احترافي"></div>
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="ستايل عصري"></div>
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="عناية باللحية"></div>
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="قص كلاسيكي"></div>
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="ستايل مميز"></div>
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="حلاقة وتقويم"></div>
+      <div class="photo" data-repeater-item data-editable-src="src" data-editable-aria-label="alt" aria-label="قص دقيق"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h4 data-editable="footer.address_title">العنوان</h4>
+        <p data-editable="footer.address_text">اكتب عنوان موقعك هنا</p>
+      </div>
+      <div>
+        <h4 data-editable="footer.contact_title">التواصل</h4>
+        <p data-editable="footer.whatsapp_text">واتساب: <a href="https://wa.me/201023080996" target="_blank" rel="noopener">201023080996</a></p>
+        <p data-editable="footer.instagram_text">إنستجرام: <a href="#" target="_blank" rel="noopener">@kalabsh_barber</a></p>
+      </div>
+      <div>
+        <h4 data-editable="footer.hours_title">ساعات العمل</h4>
+        <p data-editable="footer.hours_text">يومياً 10ص - 10م</p>
+      </div>
+    </div>
+    <p class="copyright" data-editable="footer.copyright">© 2025 كلبش</p>
+  </footer>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/dev.js"></script>
+</body>
+</html>

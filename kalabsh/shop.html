@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>المتجر | كلبش</title>
+  <link rel="icon" type="image/svg+xml" href="assets/svg/favicon.svg">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="page-shop">
+  <header class="site-header">
+    <a href="index.html" class="brand">
+      <img src="assets/images/gallery/logo.png" alt="كلبش" class="logo">
+      <span class="brand-name">كلبش</span>
+    </a>
+    <button class="nav-toggle" aria-label="فتح القائمة"></button>
+    <form class="nav-search" role="search" aria-label="بحث الموقع">
+      <input type="search" id="siteSearch" name="q" placeholder="ابحث عن منتج أو جهاز..." autocomplete="off" aria-label="اكتب نص البحث">
+      <button type="submit" class="btn search-btn" aria-label="تنفيذ البحث">بحث</button>
+    </form>
+    <nav class="site-nav">
+      <a href="index.html">الرئيسية</a>
+      <a href="pricing.html">عروض الأسعار</a>
+      <a href="gallery.html">المعرض</a>
+      <a class="active" href="shop.html">المتجر</a>
+      <a href="sauna.html">الساونا</a>
+      <a href="contact.html">اتصل بنا</a>
+      <a href="#dev" class="admin-link">المطوّر</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <h2>المتجر</h2>
+      <p>منتجات وأجهزة أصلية للمحترفين</p>
+    </section>
+
+    <section class="shop-controls">
+      <button class="btn filter" data-filter="all">الكل</button>
+      <button class="btn filter" data-filter="products">منتجات</button>
+      <button class="btn filter" data-filter="devices">أجهزة</button>
+      <button class="btn filter" data-filter="care">عناية</button>
+    </section>
+
+    <section class="shop-grid">
+      <article class="item-card" data-category="products" data-package="جل تصفيف الشعر" data-price="120 ج">
+        <div class="item-media">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="14" width="32" height="36" rx="6" fill="#222"/><rect x="22" y="20" width="20" height="24" rx="4" fill="#fff"/></svg>
+        </div>
+        <h3 class="item-title">جل تصفيف الشعر</h3>
+        <p class="item-price">120 ج</p>
+        <button class="btn primary book-btn" data-package="جل تصفيف الشعر" data-price="120 ج">احجز الآن</button>
+      </article>
+
+      <article class="item-card" data-category="devices" data-package="ماكينة حلاقة احترافية" data-price="850 ج">
+        <div class="item-media">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="20" width="40" height="24" rx="6" fill="#222"/><circle cx="48" cy="32" r="4" fill="#fff"/></svg>
+        </div>
+        <h3 class="item-title">ماكينة حلاقة احترافية</h3>
+        <p class="item-price">850 ج</p>
+        <button class="btn primary book-btn" data-package="ماكينة حلاقة احترافية" data-price="850 ج">احجز الآن</button>
+      </article>
+
+      <article class="item-card" data-category="care" data-package="زيت لحية طبيعي" data-price="150 ج">
+        <div class="item-media">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="26" r="12" fill="#222"/><rect x="26" y="38" width="12" height="10" rx="3" fill="#fff"/></svg>
+        </div>
+        <h3 class="item-title">زيت لحية طبيعي</h3>
+        <p class="item-price">150 ج</p>
+        <button class="btn primary book-btn" data-package="زيت لحية طبيعي" data-price="150 ج">احجز الآن</button>
+      </article>
+
+      <article class="item-card" data-category="devices" data-package="مجفف شعر قوي" data-price="650 ج">
+        <div class="item-media">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect x="18" y="16" width="28" height="32" rx="8" fill="#222"/><rect x="24" y="22" width="16" height="20" rx="6" fill="#fff"/></svg>
+        </div>
+        <h3 class="item-title">مجفف شعر قوي</h3>
+        <p class="item-price">650 ج</p>
+        <button class="btn primary book-btn" data-package="مجفف شعر قوي" data-price="650 ج">احجز الآن</button>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h4>العنوان</h4>
+        <p>اكتب عنوان موقعك هنا</p>
+      </div>
+      <div>
+        <h4>التواصل</h4>
+        <p>واتساب: <a href="https://wa.me/201023080996" target="_blank" rel="noopener">201023080996</a></p>
+        <p>إنستجرام: <a href="#" target="_blank" rel="noopener">@kalabsh_barber</a></p>
+      </div>
+      <div>
+        <h4>ساعات العمل</h4>
+        <p>يومياً 10ص - 10م</p>
+      </div>
+    </div>
+    <p class="copyright">© 2025 كلبش</p>
+  </footer>
+
+  <!-- Booking Modal -->
+  <div class="modal-overlay" id="bookingOverlay" hidden>
+    <div class="modal-card">
+      <button class="modal-close" id="closeBooking">&times;</button>
+      <h3>إتمام الحجز</h3>
+      <div class="package-summary">
+        <h4 id="bookingPackage">الباقة المختارة</h4>
+        <p id="bookingPrice">السعر</p>
+      </div>
+      <form id="bookingForm">
+        <div class="form-group">
+          <label for="bkName">الاسم</label>
+          <input type="text" id="bkName" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="bkPhone">رقم الهاتف</label>
+          <input type="tel" id="bkPhone" name="phone" required>
+        </div>
+        <div class="form-group">
+          <label for="bkDateTime">موعد الحجز</label>
+          <input type="datetime-local" id="bkDateTime" name="appointment" required>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn secondary" id="bkCancel">إلغاء</button>
+          <button type="submit" class="btn primary">إرسال</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/error-filter.js"></script>
+  <script src="assets/js/dev.js"></script>
+</body>
+</html>

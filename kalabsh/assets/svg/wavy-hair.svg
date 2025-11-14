@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.35"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.35"/>
+    </linearGradient>
+    <filter id="softBlur" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.6"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="400" fill="none"/>
+
+  <!-- Subtle wavy hair-like lines -->
+  <g stroke="url(#waveGrad)" stroke-width="2" fill="none" filter="url(#softBlur)">
+    <path d="M0,60 C120,40 240,80 360,60 C480,40 600,80 720,60 C760,52 780,50 800,52"/>
+    <path d="M0,110 C140,90 260,130 380,110 C500,90 620,130 740,110 C770,104 790,100 800,102"/>
+    <path d="M0,160 C110,140 230,180 350,160 C470,140 590,180 710,160 C750,152 780,150 800,152"/>
+    <path d="M0,210 C130,190 250,230 370,210 C490,190 610,230 730,210 C760,204 780,200 800,202"/>
+    <path d="M0,260 C120,240 240,280 360,260 C480,240 600,280 720,260 C760,252 780,250 800,252"/>
+    <path d="M0,310 C140,290 260,330 380,310 C500,290 620,330 740,310 C770,304 790,300 800,302"/>
+    <path d="M0,360 C110,340 230,380 350,360 C470,340 590,380 710,360 C750,352 780,350 800,352"/>
+  </g>
+
+  <!-- Light overlay texture for depth -->
+  <g stroke="#FFFFFF" stroke-opacity="0.06" stroke-width="1" fill="none">
+    <path d="M0,85 C130,65 250,105 370,85 C490,65 610,105 730,85"/>
+    <path d="M0,185 C130,165 250,205 370,185 C490,165 610,205 730,185"/>
+    <path d="M0,285 C130,265 250,305 370,285 C490,265 610,305 730,285"/>
+  </g>
+</svg>
